@@ -7,6 +7,7 @@ import com.tangshengbo.shardingjdbc.model.OrderItem;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by Tangshengbo
@@ -36,5 +37,9 @@ public class OrderService {
 
     public Order findByOrderId(Long orderId) {
         return orderMapper.selectByPrimaryKey(orderId);
+    }
+
+    public List<Order> findListByUserId(Integer userId) {
+        return orderMapper.selectListByUserId(userId);
     }
 }

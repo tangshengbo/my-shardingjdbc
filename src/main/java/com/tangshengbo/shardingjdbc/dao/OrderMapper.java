@@ -3,6 +3,8 @@ package com.tangshengbo.shardingjdbc.dao;
 import com.tangshengbo.shardingjdbc.model.Order;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface OrderMapper {
     /**
@@ -34,4 +36,7 @@ public interface OrderMapper {
      * @mbggenerated 2020-01-07
      */
     int updateByPrimaryKey(Order record);
+
+    List<Order> selectListByUserId(Integer userId);
+
 }
