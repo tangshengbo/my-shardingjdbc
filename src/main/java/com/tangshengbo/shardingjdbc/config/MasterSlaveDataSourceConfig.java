@@ -78,10 +78,11 @@
 //        dataSourceMap.put("dataSourceMaster", dataSourceMaster());
 //        dataSourceMap.put("dataSourceSlave0", dataSourceSlave0());
 //        dataSourceMap.put("dataSourceSlave1", dataSourceSlave1());
-//
+//        Properties props = new Properties();
+//        props.setProperty("sql.show", "true");
 //        //创建分片数据源
 //        try {
-//            return MasterSlaveDataSourceFactory.createDataSource(dataSourceMap, masterSlaveRuleConfiguration, new Properties());
+//            return MasterSlaveDataSourceFactory.createDataSource(dataSourceMap, masterSlaveRuleConfiguration, props);
 //        } catch (SQLException e) {
 //            e.printStackTrace();
 //            return null;

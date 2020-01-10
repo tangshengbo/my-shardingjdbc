@@ -5,7 +5,6 @@ import com.tangshengbo.shardingjdbc.service.OrderService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * Created by Tangshengbo
@@ -30,9 +29,5 @@ public class OrderController {
         return orderService.findByOrderId(orderId);
     }
 
-    @GetMapping("/user/{userId}")
-    public List<Order> findListByUserId(@PathVariable("userId") Integer userId) {
-        return orderService.findListByUserId(userId);
-    }
 
 }

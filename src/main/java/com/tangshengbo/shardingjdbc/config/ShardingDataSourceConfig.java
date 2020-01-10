@@ -63,7 +63,9 @@ public class ShardingDataSourceConfig extends BaseSourceConfig {
     public DataSource dataSource() {
         // 配置分片规则
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
-        shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration("user_id", "ds_${user_id % 2}"));
+        shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(
+                new InlineShardingStrategyConfiguration("user_id",
+                        "ds_${user_id % 2}"));
 
         // 配置真实数据源
         Map<String, DataSource> dataSourceMap = new HashMap<>();
@@ -87,9 +89,13 @@ public class ShardingDataSourceConfig extends BaseSourceConfig {
 
         shardingRuleConfig.getTableRuleConfigs().add(orderTableRuleConfig);
         shardingRuleConfig.getTableRuleConfigs().add(orderItemTableRuleConfig);
+
+        Properties props = new Properties();
+        props.setProperty("sql.show", "true");
+
         //创建分片数据源
         try {
-            return ShardingDataSourceFactory.createDataSource(dataSourceMap, shardingRuleConfig, new Properties());
+            return ShardingDataSourceFactory.createDataSource(dataSourceMap, shardingRuleConfig, props);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -107,25 +113,6 @@ public class ShardingDataSourceConfig extends BaseSourceConfig {
         return new DataSourceTransactionManager(dataSource());
     }
 
-//    /**
-//     * 创建SqlSessionFactory对象
-//     *
-//     * @return SqlSessionFactory对象
-//     * @throws Exception 异常
-//     */
-//    @Bean(name = SESSION_FACTORY_NAME)
-//    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
-//
-//        final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-//        sessionFactory.setDataSource(dataSource);
-//        sessionFactory.setTypeAliasesPackage("com.tangshengbo.shardingjdbc.model");
-//
-//        org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
-//        configuration.setMapUnderscoreToCamelCase(true);
-//        sessionFactory.setConfiguration(configuration);
-//
-//        return sessionFactory.getObject();
-//    }
 
     /**
      * 创建SqlSessionFactory对象
@@ -138,6 +125,5 @@ public class ShardingDataSourceConfig extends BaseSourceConfig {
     public SqlSessionFactory sqlSessionFactory(@Qualifier(DATA_SOURCE_NAME) DataSource dataSource) throws Exception {
         return super.getSessionFactory(dataSource);
     }
-
 
 }
